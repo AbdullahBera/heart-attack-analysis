@@ -10,4 +10,4 @@ Next steps:
 
     - Identify which ML Models need to be used. Train them and explain your learning from using those ML models. 
 
-    - Explain the math and intuition behind the models. 
+    - Explain the math and intuition behind the models. gt
