@@ -11,3 +11,5 @@ Next steps:
     - Identify which ML Models need to be used. Train them and explain your learning from using those ML models. 
 
     - Explain the math and intuition behind the models. gt
+
+- Go off of local post to make this analysis possible. -- how can you sketch this. 
