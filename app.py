@@ -4,6 +4,8 @@ import numpy as np
 import joblib 
 import shap 
 import matplotlib.pyplot as plt 
+import streamlit.components.v1 as components
+
 
 model = joblib.load("models/best_model_rf.pkl")
 
@@ -34,23 +36,21 @@ with tab2:
     smoke = st.checkbox("Smoker")
     alco = st.checkbox("Alcohol Consumer")
     active = st.checkbox("Physically Active")
-    
 
     # Prepare input data in the correct format
-    input_data = np.array([[age, gender, ap_hi, ap_lo, cholesterol, gluc, smoke, alco, active, bmi]])
-    
-    # input_data = input_data.reshape(1, -1)
-
-    st.write(f"Model expects {model.n_features_in_} features")
-    st.write(f"Input shape: {input_data.shape}")
+    input_data = pd.DataFrame([[age, gender, ap_hi, ap_lo, cholesterol, gluc, smoke, alco, active, bmi]],
+                              columns=["age", "gender", "ap_hi", "ap_lo", "cholesterol", "gluc", "smoke", "alco", "active", "bmi"])
 
     # Prediction
     prediction = model.predict(input_data)
     st.write(f"Predictions: {'Cardiovascular Disease' if prediction[0] == 1 else 'No Cardiovascular Disease'}")
 
-
     explainer = shap.Explainer(model)
     shap_values = explainer(input_data)
-    plt.figure()
-    shap.force_plot(explainer.expected_value, shap_values.values, input_data, matplotlib=True)
-    st.pyplot(plt)
+
+    # Convert force plot to HTML (since st.pyplot() has issues with force plots)
+    force_plot_html = shap.force_plot(explainer.expected_value, shap_values.values, input_data, matplotlib=False)
+
+    # Render SHAP plot in Streamlit using HTML
+    components.html(shap.getjs(), height=0)  # Ensure SHAP JS loads properly
+    components.html(force_plot_html.html(), height=300)

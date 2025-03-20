@@ -22,7 +22,6 @@ def explain_model(model: RandomForestClassifier, X_test: pd.DataFrame) -> str:
     explainer = shap.Explainer(model)
     shap_values = explainer(X_test)
 
-    shap.summary_plot(shap_values, X_test, show=False)
     plt.savefig("models/shap_summary.png")
 
 
