@@ -46,19 +46,20 @@ def train_model(X_train: pd.DataFrame, y_train: pd.Series) -> RandomForestClassi
 
     print(f"Best Params: {grid_search.best_params_}")
 
-    # Retrieve the best model from GridSearchCV
+    # Retrives the best model
     best_model = grid_search.best_estimator_
 
     return best_model
 
 
 if __name__ == "__main__":
-    X_train = pd.read_csv("../data/X_train.csv")
-    y_train = pd.read_csv("../data/y_train.csv").squeeze()
+    X_train = pd.read_csv("data/X_train.csv")
+    y_train = pd.read_csv("data/y_train.csv").squeeze()
+
 
     best_model = train_model(X_train, y_train)
 
-    joblib.dump(best_model, "../models/best_model_rf.pkl")
+    joblib.dump(best_model, "models/best_model_rf.pkl")
 
     print("Best model saved as best_model_rf.pkl")
 

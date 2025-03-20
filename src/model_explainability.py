@@ -23,12 +23,12 @@ def explain_model(model: RandomForestClassifier, X_test: pd.DataFrame) -> str:
     shap_values = explainer(X_test)
 
     shap.summary_plot(shap_values, X_test, show=False)
-    plt.savefig("../models/shap_summary.png")
+    plt.savefig("models/shap_summary.png")
 
 
 if __name__ == "__main__":
 
-    model = joblib.load("../models/best_model_rf.pkl")
-    X_test = pd.read_csv("../data/X_test.csv")
+    model = joblib.load("models/best_model_rf.pkl")
+    X_test = pd.read_csv("data/X_test.csv")
 
     explain_model(model, X_test)
