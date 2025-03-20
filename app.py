@@ -48,9 +48,20 @@ with tab2:
     explainer = shap.Explainer(model)
     shap_values = explainer(input_data)
 
-    # Convert force plot to HTML (since st.pyplot() has issues with force plots)
-    force_plot_html = shap.force_plot(explainer.expected_value, shap_values.values, input_data, matplotlib=False)
+    # Convert input_data to a 1D array
+    input_data_array = input_data.iloc[0].values  
+
+    # Ensure expected_value is a single number
+    expected_value = explainer.expected_value
+    if isinstance(expected_value, (list, np.ndarray)):
+        expected_value = expected_value[0]
+
+    # Ensure SHAP values are 1D
+    shap_values_array = shap_values.values[0]
+
+    # Generate SHAP force plot
+    force_plot_html = shap.force_plot(expected_value, shap_values_array, input_data_array, matplotlib=False)
 
     # Render SHAP plot in Streamlit using HTML
-    components.html(shap.getjs(), height=0)  # Ensure SHAP JS loads properly
+    components.html(shap.getjs(), height=0)  # Load SHAP JS
     components.html(force_plot_html.html(), height=300)
