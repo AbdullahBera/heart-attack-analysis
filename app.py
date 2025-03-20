@@ -4,7 +4,7 @@ import joblib
 import shap 
 import matplotlib.pyplot as plt 
 
-model = joblib.load("../models/best_model_rf.pkl")
+model = joblib.load("/models/best_model_rf.pkl")
 
 
 tab1, tab2 = st.tabs(["BMI Calculator", "Heart Risk"])
