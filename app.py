@@ -13,12 +13,12 @@ tab1, tab2 = st.tabs(["BMI Calculator", "Heart Risk"])
 with tab1: 
     st.header("BMI Calculator")
 
-    height_cm_bm = st.number_input("Height (cm)", 140, 200, 170)
-    weight_kg_bm = st.number_input("Weight (kg)", 40, 150, 70)
+#     height_cm_bm = st.number_input("Height (cm)", 140, 200, 170)
+#     weight_kg_bm = st.number_input("Weight (kg)", 40, 150, 70)
 
-    bmi = round(weight_kg_bm / ((height_cm_bm / 100) ** 2), 2)
+#     bmi = round(weight_kg_bm / ((height_cm_bm / 100) ** 2), 2)
 
-    st.write(f"Your BMI is: {bmi}")
+#     st.write(f"Your BMI is: {bmi}")
 
 with tab2: 
     st.title("Cardiovascular Disease Prediction")
