@@ -15,7 +15,7 @@ with tab1:
     height_cm = st.number_input("Height (cm)", 140, 200, 170)
     weight_kg = st.number_input("Weight (kg)", 40, 150, 70)
 
-    bmi = (weight_kg / ((height_cm / 100) ** 2)).round(2)
+    bmi = round(weight_kg / ((height_cm / 100) ** 2), 2)
 
     st.write(f"Your BMI is: {bmi}")
 
