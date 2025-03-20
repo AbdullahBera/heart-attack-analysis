@@ -35,7 +35,7 @@ with tab2:
 
     # Prediction
     input_data = [[age, bmi, ap_hi, ap_lo, cholesterol, gluc, smoke, alco, active]]
-    prediction = model.prediction(input_data)
+    prediction = model.predict(input_data)
     st.write(f"Predictions: {'Cardiovascular Disease' if prediction[0] == 1 else 'No Cardiovascular Disease'}")
 
 
