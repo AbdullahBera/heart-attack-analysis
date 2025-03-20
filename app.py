@@ -43,13 +43,13 @@ with tab2:
     print(f"Input data shape: {input_data.shape}")
 
 
-    # Prediction
-    prediction = model.predict(input_data)
-    st.write(f"Predictions: {'Cardiovascular Disease' if prediction[0] == 1 else 'No Cardiovascular Disease'}")
+    # # Prediction
+    # prediction = model.predict(input_data)
+    # st.write(f"Predictions: {'Cardiovascular Disease' if prediction[0] == 1 else 'No Cardiovascular Disease'}")
 
 
-    explainer = shap.Explainer(model)
-    shap_values = explainer(input_data)
-    plt.figure()
-    shap.force_plot(explainer.expected_value, shap_values.values, input_data, matplotlib=True)
-    st.pyplot(plt)
+    # explainer = shap.Explainer(model)
+    # shap_values = explainer(input_data)
+    # plt.figure()
+    # shap.force_plot(explainer.expected_value, shap_values.values, input_data, matplotlib=True)
+    # st.pyplot(plt)
