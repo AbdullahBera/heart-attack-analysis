@@ -39,9 +39,8 @@ with tab2:
     # Prepare input data in the correct format
     input_data = np.array([[age, gender, height_cm, weight_kg, ap_hi, ap_lo, cholesterol, gluc, smoke, alco, active]])
 
-    print(f"Model expects {model.n_features_in_} features")
-    print(f"Input data shape: {input_data.shape}")
-
+    st.write(f"Model expects {model.n_features_in_} features")
+    st.write(f"Input shape: {input_data.shape}")
 
     # # Prediction
     # prediction = model.predict(input_data)
