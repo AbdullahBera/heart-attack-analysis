@@ -48,20 +48,20 @@ with tab2:
     explainer = shap.Explainer(model)
     shap_values = explainer(input_data)
 
-    # Convert input_data to a 1D array
-    input_data_array = input_data.iloc[0].values  
+    # Convert SHAP values to NumPy array and extract first instance
+    shap_values_array = np.array(shap_values.values)[0]
 
-    # Ensure expected_value is a single number
+    # Convert input data to a 1D NumPy array
+    input_data_array = np.array(input_data.iloc[0])
+
+    # Ensure expected_value is a scalar
     expected_value = explainer.expected_value
     if isinstance(expected_value, (list, np.ndarray)):
         expected_value = expected_value[0]
 
-    # Ensure SHAP values are 1D
-    shap_values_array = shap_values.values[0]
-
     # Generate SHAP force plot
     force_plot_html = shap.force_plot(expected_value, shap_values_array, input_data_array, matplotlib=False)
 
-    # Render SHAP plot in Streamlit using HTML
-    components.html(shap.getjs(), height=0)  # Load SHAP JS
+    # Render SHAP force plot in Streamlit using HTML
+    components.html(shap.getjs(), height=0)  # Ensure SHAP JS loads
     components.html(force_plot_html.html(), height=300)
