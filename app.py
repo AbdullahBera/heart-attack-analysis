@@ -24,6 +24,7 @@ with tab2:
     st.title("Cardiovascular Disease Prediction")
 
     # User Inputs (matching dataset structure)
+    id_value = 0 
     age = st.slider("Age (in years)", 30, 80, 50) * 365  # Convert to days
     gender = st.selectbox("Gender", [1, 2])  # 1 = Female, 2 = Male
     height_cm = st.number_input("Height (cm)", 140, 200, 170)
@@ -37,18 +38,20 @@ with tab2:
     active = int(st.checkbox("Physically Active"))  # Convert to 0 or 1
 
     # Prepare input data in the correct format
-    input_data = np.array([[age, gender, height_cm, weight_kg, ap_hi, ap_lo, cholesterol, gluc, smoke, alco, active]])
+    input_data = np.array([[id_value, age, gender, height_cm, weight_kg, ap_hi, ap_lo, cholesterol, gluc, smoke, alco, active]])
+    
+    input_data = input_data.reshape(1, -1)
 
     st.write(f"Model expects {model.n_features_in_} features")
     st.write(f"Input shape: {input_data.shape}")
 
-    # # Prediction
-    # prediction = model.predict(input_data)
-    # st.write(f"Predictions: {'Cardiovascular Disease' if prediction[0] == 1 else 'No Cardiovascular Disease'}")
+    # Prediction
+    prediction = model.predict(input_data)
+    st.write(f"Predictions: {'Cardiovascular Disease' if prediction[0] == 1 else 'No Cardiovascular Disease'}")
 
 
-    # explainer = shap.Explainer(model)
-    # shap_values = explainer(input_data)
-    # plt.figure()
-    # shap.force_plot(explainer.expected_value, shap_values.values, input_data, matplotlib=True)
-    # st.pyplot(plt)
+    explainer = shap.Explainer(model)
+    shap_values = explainer(input_data)
+    plt.figure()
+    shap.force_plot(explainer.expected_value, shap_values.values, input_data, matplotlib=True)
+    st.pyplot(plt)
