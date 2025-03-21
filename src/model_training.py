@@ -4,7 +4,7 @@ import joblib
 
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import cross_val_score, GridSearchCV
-from sklearn.metrics import classification_report
+from sklearn.metrics import classification_report, accuracy_score
 
 
 def train_model(X_train: pd.DataFrame, y_train: pd.Series) -> RandomForestClassifier:
@@ -36,7 +36,8 @@ def train_model(X_train: pd.DataFrame, y_train: pd.Series) -> RandomForestClassi
     # Train the model using Random Forest and GridSearchCV
     rf = RandomForestClassifier(random_state=19)
     grid_search = GridSearchCV(rf, 
-                               param_grid, 
+                               param_grid,
+                               scoring='accuracy', 
                                cv=5, 
                                n_jobs=-1, 
                                verbose=2)
@@ -44,10 +45,17 @@ def train_model(X_train: pd.DataFrame, y_train: pd.Series) -> RandomForestClassi
     # Fit the model using Grid search 
     grid_search.fit(X_train, y_train)
 
-    print(f"Best Params: {grid_search.best_params_}")
-
     # Retrives the best model
     best_model = grid_search.best_estimator_
+
+    print(f"\nBest Params: {grid_search.best_params_}")
+    print(f"Best Cross-validation Score: {grid_search.best_score_}")
+    print(f"Training Accuracy {accuracy_score(y_train, best_model.predict(X_train))}")
+
+    y_train_pred = best_model.predict(X_train)
+
+    print(f"\nClassificaiton Report on Training Data")
+    print(classification_report(y_train, y_train_pred))
 
     return best_model
 

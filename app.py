@@ -5,12 +5,26 @@ import joblib
 import shap 
 import matplotlib.pyplot as plt 
 import streamlit.components.v1 as components
+from sklearn.metrics import classification_report
 
 
 model = joblib.load("models/best_model_rf.pkl")
 
+# Load test dataset
+X_test = pd.read_csv("data/X_test.csv")  
+y_test = pd.read_csv("data/y_test.csv")
 
-tab1, tab2 = st.tabs(["BMI Calculator", "Heart Risk"])
+# Get predictions on the test set
+y_test_pred = model.predict(X_test)
+
+# Generate classification report
+classification_rep = classification_report(y_test, y_test_pred, output_dict=True)
+
+# Convert report to DataFrame for easy display in Streamlit
+classification_df = pd.DataFrame(classification_rep).transpose()
+
+
+tab1, tab2, tab3 = st.tabs(["BMI Calculator", "Heart Risk", "Model Performance"])
 
 with tab1: 
     st.header("BMI Calculator")
@@ -126,3 +140,17 @@ with tab2:
         
     except Exception as e:
         st.error(f"Error generating feature contribution plot: {str(e)}")
+
+with tab3:
+    st.title("Model Performance on Test Data")
+
+    # Display classification report
+    st.subheader("Classification Report")
+    st.write("This report summarizes the precision, recall, and F1-score for each class.")
+
+    # Display classification report as a table
+    st.dataframe(classification_df)
+
+    # Display overall accuracy
+    test_accuracy = np.mean(y_test_pred == y_test.values.ravel())
+    st.metric(label="Test Accuracy", value=f"{test_accuracy:.4f}")
